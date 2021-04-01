@@ -1,5 +1,5 @@
-// var connection = new WebSocket('ws://192.168.178.25:9090'); 
-var connection = new WebSocket('ws://8197dee08bf7.ngrok.io')
+var MMServer = "" // Magic Mirror IP adress
+var connection = new WebSocket('ws://' + MMServer + ':9090'); 
 var name = ""; 
 
 var padContainer = document.getElementById('dpad-container');
