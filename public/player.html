@@ -1,0 +1,209 @@
+<html lang = "en">
+    <head>
+        <meta charset = "utf-8" /> 
+    </head>
+    <body>
+        <button id="btnPlay" class="play">PLAY</button>
+        <div id="dpad-container" class="dpad-container">
+            <div class="dpad-backdrop"></div>
+            <button id="btnUp" class="dpad dpad-up">
+                <div class="arrow-up"></div>
+                <div class="arrow-up2"></div>
+            </button>
+            <button id="btnRight" class="dpad dpad-right">
+                <div class="arrow-right2"></div>
+                <div class="arrow-right"></div>
+            </button>
+            <button id="btnDown" class="dpad dpad-down">
+                <div class="arrow-down2"></div>
+                <div class="arrow-down"></div>
+            </button>
+            <button id="btnLeft" class="dpad dpad-left">
+                <div class="arrow-left"></div>
+                <div class="arrow-left2"></div>
+            </button>
+        </div>
+    </body>
+    <script src="player.js"></script>
+    <style>
+        @font-face {
+            font-family: 'gameFont';
+            src: url(arcade.regular.ttf);
+        }
+
+        .play {
+            top: 40%;
+            left: 50%;
+            width: 600px;
+            height: 200px;
+            position: fixed;
+            border:0.1em solid #FFFFFF;
+            background-color:#202020;
+            border-radius:0.12em;
+            margin-left: -300px;
+            text-decoration:none;
+            font-family: 'gameFont';
+            font-weight:700;
+            font-size: 900%;
+            color:#FFFFFF;
+            text-align:center;
+            transition: all 0.2s;
+        }
+
+        .play:active{
+            color:#FFEB3B;
+            border-color:#FFEB3B;
+            background-color:#FFEB3B;;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background: #000000;
+        }
+
+        .dpad-container {
+            visibility: hidden;
+            top: 60%;
+            height: 600px;
+            left: 50%;
+            position: fixed;
+            width: 600px;
+            margin-top: -300px;
+            margin-left: -300px;
+        }
+
+        .dpad-backdrop {
+            background: #FFFFFF;
+            border-radius: 10px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+            width: 240px;
+        }
+
+        .dpad-backdrop::after {
+            background: #FFFFFF;
+            border-radius: 10px;
+            content: '';
+            display: block;
+            height: 240px;
+            left: -180px;
+            position: absolute;
+            top: 180px;
+            width: 600px;
+        }
+
+        .dpad {
+            background: #202020;
+            box-shadow: 0 1px 10px #37474F;
+            height: 180px;
+            position: absolute;
+            width: 180px;
+        }
+
+        .dpad-up {
+            border-radius: 5px 5px 0 0;
+            bottom: 400px;
+            left: 210px;
+        }
+
+        .dpad-right {
+            border-radius: 0 5px 5px 0;
+            bottom: 210px;
+            left: 400px;
+        }
+
+        .dpad-down {
+            border-radius: 0 0 5px 5px;
+            bottom: 20px;
+            left: 210px;
+        }
+
+        .dpad-left {
+            border-radius: 5px 0 0 5px;
+            bottom: 210px;
+            left: 20px;
+        }
+
+        /* D-PAD arrows */
+
+        .arrow-up {
+            border-bottom: 72px solid #FFFFFF;
+            border-left: 72px solid transparent;
+            border-right: 72px solid transparent;
+            height: 0;
+            margin: 60px auto 0;
+            width: 0;
+        }
+
+        .arrow-right {
+            border-bottom: 72px solid transparent;
+            border-left: 72px solid #FFFFFF;
+            border-top: 72px solid transparent;
+            height: 0;
+            left: 48px;
+            position: absolute;
+            top: 18px;
+            width: 0;
+        }
+
+        .arrow-down {
+            border-left: 72px solid transparent;
+            border-right: 72px solid transparent;
+            border-top: 72px solid #FFFFFF;
+            height: 0;
+            margin: 60px auto 0;
+            width: 0;
+        }
+
+        .arrow-left {
+            border-bottom: 72px solid transparent;
+            border-right: 72px solid #FFFFFF;
+            border-top: 72px solid transparent;
+            height: 0;
+            margin: 18px 0 0 60px;
+            width: 0;
+        }
+
+        /* Active arrows */
+
+        .dpad:active {
+            background-color: #303030;
+        }
+
+        .dpad:active .arrow-up {
+            border-bottom-color: #303030;
+        }
+
+        .dpad:active .arrow-up2 {
+            background-color: #303030;
+        }
+
+        .dpad:active .arrow-right {
+            border-left-color: #303030;
+        }
+
+        .dpad:active .arrow-right2 {
+            background-color: #303030;
+        }
+
+        .dpad:active .arrow-down {
+            border-top-color: #303030;
+        }
+
+        .dpad:active .arrow-down2 {
+            background-color: #303030;
+        }
+
+        .dpad:active .arrow-left {
+            border-right-color: #303030;
+        }
+
+        .dpad:active .arrow-left2 {
+            background-color: #303030;
+        }
+    </style>
+</html>
