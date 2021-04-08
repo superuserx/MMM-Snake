@@ -8,26 +8,26 @@ Module.register("MMM-Snake", {
         if (!this.gameRunning) {
             var startscreen = document.createElement("div");
 
-	    var text_div = document.createElement("div");
-            text_div.style.fontFamily = "gameFont";
-            text_div.style.fontSize = "200px";
-            text_div.style.textAlign = "center";
-	    text_div.style.marginTop = "300px";
-            var text = document.createTextNode("SNAKE");
+	    var snake_text_div = document.createElement("div");
+            snake_text_div.style.fontFamily = "gameFont";
+            snake_text_div.style.fontSize = "200px";
+            snake_text_div.style.textAlign = "center";
+	    snake_text_div.style.marginTop = "300px";
+            var snake_text = document.createTextNode("SNAKE");
 
-	    var text_div2 = document.createElement("div");
-	    text_div2.style.fontFamily = "gameFont";
-	    text_div2.style.textAlign = "center";
-	    text_div2.style.fontSize = "100px";
-	    text_div2.style.marginTop = "90px";
-	    var text2 = document.createTextNode("Press Play");
+	    var play_text_div = document.createElement("div");
+	    play_text_div.style.fontFamily = "gameFont";
+	    play_text_div.style.textAlign = "center";
+	    play_text_div.style.fontSize = "100px";
+	    play_text_div.style.marginTop = "90px";
+	    var play_text = document.createTextNode("Press Play");
 
-            text_div.appendChild(text);
-	    text_div2.appendChild(text2);
+            snake_text_div.appendChild(snake_text);
+	    play_text_div.appendChild(play_text);
 
             //startscreen.appendChild(img);
-            startscreen.appendChild(text_div);
-	    startscreen.appendChild(text_div2);
+            startscreen.appendChild(snake_text_div);
+	    startscreen.appendChild(play_text_div);
             return startscreen;
         }
 
@@ -63,7 +63,6 @@ Module.register("MMM-Snake", {
         function drawText(text, font, x, y) {
             ctx.beginPath();
             ctx.font = font;
-            //ctx.font.fontSize = "50px";
             ctx.fillText(text, x, y);
             ctx.closePath();
         }
@@ -141,7 +140,7 @@ Module.register("MMM-Snake", {
         Log.log("Starting module: ", this.name);
 
         //setup signal server connection
-        this.SignalConnection = new WebSocket('ws://192.168.178.25:9090');
+	this.SignalConnection = new WebSocket('ws://localhost:9090');
 
         this.SignalConnection.onmessage = (message) => { 
             var data = JSON.parse(message.data); 
@@ -195,10 +194,6 @@ Module.register("MMM-Snake", {
             this.dataChannel.onerror = function (error) { 
                 console.log("Error:", error); 
             };
-                
-            this.dataChannel.onmessage = function (event) { 
-                console.log("RTC message:", event.data); 
-            };  
         };
 
         // game world
@@ -249,24 +244,19 @@ Module.register("MMM-Snake", {
     showGame: function () {
 	var self = this;
         self.show(1000, function () {
-                //Log.log(self.name + ' is shown.');
         }, {lockString: self.identifier});
         MM.getModules().exceptModule(self).enumerate(function (module) {
                 module.hide(1000, function() {
-                        //Log.log(module.name + 'is hidden.');
                 }, {lockString: self.identifier});
-		//Log.log(module.lockStrings);
         });
     },
 
     hideGame: function () {
 	var self = this;
         this.hide(1000, function () {
-		//Log.log(self.name + ' is hidden.');
         }, {lockString: self.identifier});
         MM.getModules().exceptModule(self).enumerate(function (module) {
                 module.show(1000, function () {
-                        //Log.log(module.name + ' is shown.');
                 }, {lockString: self.identifier});
         });
     },
@@ -356,18 +346,3 @@ Module.register("MMM-Snake", {
         }
     }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -50,7 +50,7 @@ module.exports = NodeHelper.create({
                 //switching type of the user message 
                 switch (data.type) {
                     case "playerready":
-                        console.log("player connected");
+                        console.log("Snake: player connected");
                         this.sendSocketNotification('PLAY', '');
                         break;
                     
@@ -131,24 +131,6 @@ module.exports = NodeHelper.create({
 			this.highscore = data.value;
 			break;
 
-                    case "leave": 
-                        var conn;
-                        if (data.name == "game") {
-                            this.conn_game = null;
-                            conn = this.conn_player;
-                        } else {
-                            this.conn_player = null;
-                            conn = this.conn_game;
-                        }
-                            
-                        //notify the other user so he can disconnect his peer connection 
-                        if(conn != null) { 
-                            sendTo(conn, { 
-                                type: "leave" 
-                            }); 
-                        }                    
-                        break;
-                                    
                     default: 
                         sendTo(connection, { 
                             type: "error", 

@@ -1,16 +1,13 @@
-var MMServer = window.location.host;
-var connection = new WebSocket('ws://' + MMServer + ':9090'); 
-var name = ""; 
+var connection = new WebSocket('ws://' + window.location.hostname + ':9090'); 
 
 var padContainer = document.getElementById('dpad-container');
-var logo = document.getElementById('logo');
 var buttonPlay = document.getElementById('btnPlay');
 var buttonUp = document.getElementById('btnUp'); 
 var buttonDown = document.getElementById('btnDown'); 
 var buttonRight = document.getElementById('btnRight'); 
 var buttonLeft = document.getElementById('btnLeft');
 
-var connectedUser, myConnection, dataChannel;
+var rtcConnection, dataChannel;
 var offer, answer;
 var cands = [];
   
@@ -24,7 +21,6 @@ btnPlay.addEventListener("click", function(event){
 
 //handle messages from the server 
 connection.onmessage = function (message) { 
-    console.log("Server message", message.data);
     var data = JSON.parse(message.data); 
 
     switch(data.type) { 
@@ -48,19 +44,17 @@ async function onPlay(success) {
         alert("oops...offer failed"); 
     } else { 
         //creating our RTCPeerConnection object 	
-        var configuration = { 
+        var configuration = {
+	    // ice server is only needed when player is not in the same network
             //"iceServers": [{ "urls": "stun:stun.1.google.com:19302" }] 
         }; 
 		
-        myConnection = new RTCPeerConnection(configuration);
+        rtcConnection = new RTCPeerConnection(configuration);
         openDataChannel();
 
-        console.log("RTCPeerConnection object was created"); 
-        console.log(myConnection); 
-  
         //setup ice handling
         //when the browser finds an ice candidate we send it to another peer 
-        myConnection.onicecandidate = function (event) {
+        rtcConnection.onicecandidate = function (event) {
             if (event.candidate) { 
                 send({ 
                     type: "candidate", 
@@ -69,41 +63,35 @@ async function onPlay(success) {
             } 
         };
 
-        myConnection.ondatachannel = function (event) {
+        rtcConnection.ondatachannel = function (event) {
             dataChannel = event.channel;
-            console.log("received dataChannel invite");
-
             dataChannel.onerror = function (error) { 
                 console.log("Error:", error); 
             };
-                
-            dataChannel.onmessage = function (event) { 
-                console.log("RTC message:", event.data); 
-            };  
         };
 
         //make an offer
-        var offer = await myConnection.createOffer();
-        await myConnection.setLocalDescription(offer);
-        send({type: "offer", offer: myConnection.localDescription});
+        var offer = await rtcConnection.createOffer();
+        await rtcConnection.setLocalDescription(offer);
+        send({type: "offer", offer: rtcConnection.localDescription});
     }
 };
 
 //when another user answers to our offer 
 function onAnswer(answer) {
-    myConnection.setRemoteDescription(new RTCSessionDescription(answer));
+    rtcConnection.setRemoteDescription(new RTCSessionDescription(answer));
 
     for (var i=0; i<cands.length; i++) {
-        myConnection.addIceCandidate(cands[i]);
+        rtcConnection.addIceCandidate(cands[i]);
     }
 }
 
 //when we got ice candidate from another user 
 function onCandidate(candidate) {
-    if (!myConnection.setRemoteDescription) {
+    if (!rtcConnection.setRemoteDescription) {
         cands.push(candidate);
     } else {
-        myConnection.addIceCandidate(candidate);
+        rtcConnection.addIceCandidate(candidate);
     }
 }
 
@@ -128,16 +116,10 @@ function openDataChannel() {
         reliable:false 
     }; 
     
-    dataChannel = myConnection.createDataChannel("myDataChannel", dataChannelOptions);
-    console.log("opened dataChannel");
-        
+    dataChannel = rtcConnection.createDataChannel("myDataChannel", dataChannelOptions);
     dataChannel.onerror = function (error) { 
         console.log("Error:", error); 
     };
-        
-    dataChannel.onmessage = function (event) { 
-        console.log("RTC message:", event.data); 
-    };  
 }
 
 buttonUp.addEventListener("click", function(event){
