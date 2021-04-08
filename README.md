@@ -23,10 +23,11 @@ Add module to config.js:
 ```
 ### Important
 You have to set the *address* to an accessible interface (or 0.0.0.0) and add the IP address of the device you want to use as a controller to *ipWhitelist* or allow all IP addresses in config.js.
+
 Your controller device must be on the same network.
 
 ## Options
 | Option | Description |
 |--------|-------------|
-| startsize | Size of the snake when starting the game. |
+| startsize | Snake size at start |
 | speed | Game speed |
