@@ -1,4 +1,4 @@
-var MMServer = "" // Magic Mirror IP adress
+var MMServer = window.location.host;
 var connection = new WebSocket('ws://' + MMServer + ':9090'); 
 var name = ""; 
 
