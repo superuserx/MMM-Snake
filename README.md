@@ -1,6 +1,8 @@
 # MMM-Snake
 This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror).
 
+![](snake_start.png "startscreen") ![](snake_game.png "ingame")
+
 Play the retro game Snake:snake: on your mirror using your smartphone (or any other device with a web browser).
 
 ## Installation
