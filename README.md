@@ -1,12 +1,12 @@
 # MMM-Snake
 This is a module for the [MagicMirror](https://github.com/MichMich/MagicMirror).
 
-<p float="left">
+Play the retro game Snake on your mirror using your smartphone :video_game: :snake: :iphone:
+
+<p float="center">
 	<img src="snake_start.png" alt="drawing" width="300"/>
 	<img src="snake_game.png" alt="drawing" width="300"/>
 </p>
-
-Play the retro game Snake:snake: on your mirror using your smartphone (or any other device with a web browser).
 
 ## Installation
 Clone repository:
@@ -36,3 +36,10 @@ Your controller device must be on the same network.
 |--------|-------------|
 | startsize | Snake size at start |
 | speed | Game speed |
+
+## How to play
+1. Open ***yourmirroripaddress:yourmirrorport/MMM-Snake/player.html*** on your smartphone webbrowser
+2. Press play
+
+The module is hidden by default. Only when you open *player.html* on your controller device, the snake module will be shown and all other modules will be hidden.
+When the connection is closed, the game is reset and hidden. All other modules will be shown again.
