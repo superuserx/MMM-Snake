@@ -123,22 +123,33 @@ function openDataChannel() {
 }
 
 buttonUp.addEventListener("click", function(event){
-    window.navigator.vibrate(50);
     dataChannel.send("u");
+    try {
+        window.navigator.vibrate(50);
+    }
+    catch (e) {}
 });
 
 buttonDown.addEventListener("click", function(event){
-    window.navigator.vibrate(50);
     dataChannel.send("d");
+    try {
+        window.navigator.vibrate(50);
+    }
+    catch (e) {}
 });
 
 buttonRight.addEventListener("click", function(event){
-    window.navigator.vibrate(50);
     dataChannel.send("r");
+    try {
+        window.navigator.vibrate(50);
+    }
+    catch (e) {}
 });
 
 buttonLeft.addEventListener("click", function(event){
-    window.navigator.vibrate(50);
     dataChannel.send("l");
+    try {
+        window.navigator.vibrate(50);
+    }
+    catch (e) {}
 });
-
